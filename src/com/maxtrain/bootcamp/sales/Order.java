@@ -4,13 +4,31 @@ import java.util.ArrayList;
 
 public class Order {
 	
+	private static int nextId = 1;
+	
 	private int id;
 	private String description;
 	private double total;
 	private Customer customer;
 	private ArrayList<Orderline> orderLines;
 	
+	public Order(String description, Customer customer) {
+		this.setId(nextId++);
+		this.setDescription(description);
+		this.setTotal(0);
+		this.setCustomer(customer);
+		this.orderLines = new ArrayList<Orderline>();
+	}
 	
+	public String toString() {
+		return getId() + "|"
+				+ getDescription() + "|"
+				+ getTotal() + "|"
+				+ getCustomer().getName();
+	}
+	public void log() {
+		System.out.println(this);
+	}
 	
 	public int getId() {
 		return id;
@@ -35,6 +53,10 @@ public class Order {
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	
+	public ArrayList<Orderline> getOrderLines() {
+		return orderLines;
 	}	
 
 }
