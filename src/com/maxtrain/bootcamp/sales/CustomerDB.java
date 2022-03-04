@@ -1,60 +1,39 @@
 package com.maxtrain.bootcamp.sales;
 
+import java.util.ArrayList;
+
 public class CustomerDB {
 	
-	private Customer[] customers = new Customer[10];
-	private int index = 0;
+	private ArrayList<Customer> customers = new ArrayList<Customer>();	
 	
 	public void add(Customer customer) throws Exception {
-		if(index > 9) {
-			throw new Exception("Collection is full!");
-		}
-		customers[index] = customer;
-		index++;
+		customers.add(customer);
 	}
-	
-	private int findIndex(int id) {
-		for(var i = 0; i < customers.length; i++) {
-			var cust = customers[i];
-			if(cust == null) {
-				continue;
-			}
-			if(cust.getId() == id) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
+		
 	public boolean delete(int id) {
-		var index = findIndex(id);
-		if(index == -1) {
+		var cust = getByPk(id);
+		if(cust == null) {
 			return false;
 		}
-		customers[index] = null;
+		customers.remove(cust);
 		return true;
 	}
 	
 	public Customer[] getAll() {
-		var custs = new Customer[index];
-		for(var i = 0; i < index; i++) {
-			custs[i] = customers[i];
+		var custs = new Customer[customers.size()];
+		for(var i = 0; i < customers.size(); i++) {
+			custs[i] = customers.get(i);
 		}
 		return custs;
 	}
 	
 	public Customer getByPk(int id) {
-		var index = findIndex(id);
-		if(index > -1) {
-			return customers[index];
+		for(var cust : customers) {
+			if(cust.getId() == id) {
+				return cust;
+			}
 		}
 		return null;
 	}
-	
-	public Customer get(int index) throws Exception {
-		if(index < 0 || index > 9) {
-			throw new Exception("Index out of range!");
-		}
-		return customers[index];
-	}
+
 }
